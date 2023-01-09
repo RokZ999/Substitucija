@@ -2,7 +2,7 @@
 
 str = "DETA JG ZŠJF, JG MJČGUJŠ ZŠJF, NJOFJM KG IJB ANBATK, TAUE NREPE! GJ IAT PE CE HBAIŽH SRKSJB, GJ IAT PE Š PŽTIGKZA DK NJB, ANBATK PE, ANBATK, NREPE! UEC IAT BUŽNJT SADBEB FE ZŠJF, ŠDEHATŽR, HK GE HRKV SRKSJF FRSK Š SATBENK FJU. KG PBJU, FE NRAIGK MJČGUJŠ ZŠJF IA Š GUKO KCIRKDEB TEBANŽČUE DBJN KG DSJF RECVERKB FAVGK UKT SAPBJN. DETA JG IJB, JG MJČGUJŠ ZŠJF ANBATK, TAUE NREPE, DEU ŠJČ, HEHA ŠDEH FEH SACNREŠ MBAŠJHŽ CE RJČJFHETK SATEPE."
 str_without_split = str.replace(",", "").replace(
-    ".", "").replace("?", "").replace("!", "")
+    ".", "").replace("?", "").replace("!", "") .replace("Č", "X").replace("Š", "Y").replace("Ž", "W")
 str = str_without_split.split()
 
 
@@ -93,3 +93,5 @@ dvojcki = [str_without_split[i]
            for i in range(0, len(str_without_split))]
 doStat(dvojcki)
 ###########
+
+print(str_without_split)
