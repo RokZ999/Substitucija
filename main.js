@@ -11,16 +11,18 @@ function get_raw_txt(){
     let three_grams = null;
 
     $(document).on('input', '#raw_txt', function() {
-        $('#raw_txt2').val("");
+
         raw_txt_without_split = $(this).val().replace(/,|\?|!|\./g, "");
         raw_txt = raw_txt_without_split.split(" ");   
 
+        $('#raw_txt2').val(raw_txt_without_split);
         last_chars_of_words = raw_txt.map(x => x[x.length - 1]);
         first_chars_of_words  = raw_txt.map(x => x[0]);
         independent_letters = raw_txt.map(x => x.length === 1  ?  x  : undefined);
         single_letters = [...raw_txt_without_split].map((_, i) => raw_txt_without_split.slice(i, i + 1));
         bi_grams = [...raw_txt_without_split].map((_, i) => raw_txt_without_split.slice(i, i + 2));
         three_grams = [...raw_txt_without_split].map((_, i) => raw_txt_without_split.slice(i, i + 3));
+
 
         appendTable(doStat(last_chars_of_words),'koncnice');
         appendTable(doStat(first_chars_of_words),'zacetnice');
@@ -77,6 +79,7 @@ function appendTable(listOfData,id){
 
 function replacingTable(listOfData){     
   let i = 0;
+ 
   listOfData = listOfData.filter(x => typeof x !== 'undefined' && !x.includes(' '));
   listOfData = [...new Set(listOfData)];
   const $table = $('<table>').addClass('table-bordered table-sm');
@@ -101,19 +104,46 @@ function replacingTable(listOfData){
   $('#zamnejaj').html($table);
 
   let cypher = $('#raw_txt').val();
+  let replacements = new Map();
 
-  $('#zamnejaj').find('input').on('input', function() {
-      const $input = $(this);
-
-      //let original = $('#original-input-' + $input.index()).val();
-      let original = $('#original-input-0').val();
-      let replace = $input.val();
-
+$('#zamnejaj').find('input').on('input', function() {
+    const $input = $(this);
+    let original = $('#original-input-' + $input.parent().index()).text();
+    let replace = $(this).val();
     
-      console.log(original)
+    if(replace !== ''){
+      replacements = replacements.set(original, replaceElement(cypher,original))
+      cypher = cypher.replaceAll(original, `<b>${replace}</b>`);
+     
+    }else{
+      cypher = revertNewElement(cypher,replacements.get(original), original)
+    }
+    $('#raw_txt2').val(cypher);
+  
+  });
+}
 
-      cypher = cypher.replace(original, replace);
+
+function replaceElement(str, oldElement) {
+  var indexes = [];
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === oldElement) {
+      indexes.push(i);
+    }
+  }
+  console.log(indexes)
+  return indexes;
+}
+
+function revertNewElement(str, indexes,oldElement) {
+  for (let i = 0; i < indexes.length; i++) 
+    str = replaceAt(str,indexes[i],oldElement)
     
-      $('#raw_txt2').val(cypher);
-    });
+  return str;
+}
+
+function replaceAt(str, index, replacement) {
+  let strArr = str.split('');
+  strArr.splice(index, 1, replacement);
+  return strArr.join('');
 }
