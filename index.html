@@ -20,7 +20,7 @@
     ></script>
     <script src="main.js"></script>
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <div class="container-fluid">
       <div class="row">
         <div class="col-5">
@@ -48,12 +48,7 @@
                 </div>
 
                 <label for="comment">Dešef besedilo:</label>
-                <textarea
-                  class="form-control"
-                  rows="5"
-                  id="raw_txt2"
-                  name="text"
-                ></textarea>
+                <p class="form-control" rows="5" id="raw_txt2" name="text"></p>
               </div>
             </form>
           </div>
@@ -80,7 +75,7 @@
           </div>
 
           <div class="card mb-1 mt-1">
-            <div class="card-header">Najpogostejše bi-grami</div>
+            <div class="card-header">Najpogostejše trojcki</div>
             <div class="card-body">
               <div
                 id="trojniki"
@@ -122,4 +117,9 @@
       </div>
     </div>
   </body>
+  <footer class="mt-auto bg-dark text-center text-white">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      Autrhor: RokZ
+    </div>
+  </footer>
 </html>
